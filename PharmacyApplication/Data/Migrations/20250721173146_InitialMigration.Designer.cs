@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PharmacyApplication.Data;
 
@@ -11,9 +12,11 @@ using PharmacyApplication.Data;
 namespace PharmacyApplication.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250721173146_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -248,15 +251,10 @@ namespace PharmacyApplication.Data.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("MedicineTypeId")
-                        .HasColumnType("int");
-
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MedicineTypeId");
 
                     b.ToTable("Medicines");
                 });
@@ -381,17 +379,6 @@ namespace PharmacyApplication.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PharmacyApplication.Data.DataModels.Medicine", b =>
-                {
-                    b.HasOne("PharmacyApplication.Data.DataModels.MedicineType", "MedicineType")
-                        .WithMany()
-                        .HasForeignKey("MedicineTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("MedicineType");
                 });
 
             modelBuilder.Entity("PharmacyApplication.Data.DataModels.PharmacyMedicine", b =>

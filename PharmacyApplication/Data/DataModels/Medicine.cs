@@ -1,5 +1,6 @@
 ﻿using PharmacyApplication.Common;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PharmacyApplication.Data.DataModels
 {
@@ -22,6 +23,12 @@ namespace PharmacyApplication.Data.DataModels
         [Required]
         [MaxLength(ValidationConstants.MedicineDescriptionMaxValue)]
         public string Description { get; set; } = null!;
+
+        [Required]
+        public int MedicineTypeId { get; set; }
+
+        [ForeignKey(nameof(MedicineTypeId))]
+        public MedicineType MedicineType { get; set; } = null!;
 
         public string? ImageURL { get; set; }
 
